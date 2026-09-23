@@ -6,6 +6,8 @@ export type KeyboardInputs = {
   Minus: boolean;
   Equal: boolean;
   KeyH: boolean;
+  KeyC: boolean;
+  Space: boolean;
 };
 
 export type MouseInputs = {
@@ -29,6 +31,8 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
     Minus: false,
     Equal: false,
     KeyH: false,
+    KeyC: false,
+    Space: false,
   };
 
   const mouse: MouseInputs = {
@@ -59,6 +63,11 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
       kb.Equal = true;
     } else if (code === 'KeyH') {
       kb.KeyH = true;
+    } else if (code === 'KeyC') {
+      kb.KeyC = true;
+    } else if (code === 'Space') {
+      event.preventDefault();
+      kb.Space = true;
     }
   });
 
@@ -79,6 +88,10 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
       kb.Equal = false;
     } else if (code === 'KeyH') {
       kb.KeyH = false;
+    } else if (code === 'KeyC') {
+      kb.KeyC = false;
+    } else if (code === 'Space') {
+      kb.Space = false;
     }
   });
 

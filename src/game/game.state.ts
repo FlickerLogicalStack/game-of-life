@@ -1,23 +1,20 @@
-import { CELL_RECT_SIZE } from './entities/cells/cells.renderer';
 import { create_camera } from './entities/camera/camera';
 import { create_debug } from './entities/debug/debug';
 import { create_hud } from './entities/hud/hud';
 import { Life } from './entities/life/life';
+import { center_camera } from './entities/misc/center_camera';
 
 export const create_game_state = (engine: GOL.EngineContext): GOL.GameState => {
   const life = new Life(256, 128);
   const camera = create_camera();
 
-  const board_width = life.width * CELL_RECT_SIZE;
-  const board_height = life.height * CELL_RECT_SIZE;
-
-  camera.x = engine.canvas.width / 2 - board_width / 2;
-  camera.y = board_height / 2 - engine.canvas.height / 2;
+  center_camera(camera, life, engine.canvas.width, engine.canvas.height);
 
   return {
     life,
     camera,
     hud: create_hud(),
     debug: create_debug(),
+    paused: false,
   };
 };

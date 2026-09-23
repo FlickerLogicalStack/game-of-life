@@ -1,3 +1,4 @@
+import { center_camera } from './entities/misc/center_camera';
 import { clamp } from './entities/misc/utils';
 
 const CAMERA_SPEED = 600;
@@ -40,6 +41,16 @@ export const handle_input = (engine: GOL.EngineContext, game: GOL.GameState) => 
   if (kb.KeyH === true) {
     kb.KeyH = false;
     game.hud.enabled ^= 1;
+  }
+
+  if (kb.KeyC === true) {
+    kb.KeyC = false;
+    center_camera(camera, game.life, engine.canvas.width, engine.canvas.height);
+  }
+
+  if (kb.Space === true) {
+    kb.Space = false;
+    game.paused = !game.paused;
   }
 
   if (mouse.is_dragging === true) {

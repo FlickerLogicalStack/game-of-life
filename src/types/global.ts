@@ -13,6 +13,7 @@ declare global {
       camera: Camera;
       hud: Hud;
       debug: Debug;
+      paused: boolean;
     };
   }
 

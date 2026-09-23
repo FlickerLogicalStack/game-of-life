@@ -19,9 +19,6 @@ export type EngineContext = {
   delta: number;
   delta_mul: number;
 
-  // Reserved: pause logic is not wired yet (debug HUD reads it). Restore when needed.
-  is_paused: boolean;
-
   resources: unknown;
 };
 
@@ -48,8 +45,6 @@ export const create_engine_context = (canvas: HTMLCanvasElement, resources: unkn
     frame: 0,
     delta: 0,
     delta_mul: 0,
-
-    is_paused: false,
 
     resources,
   };

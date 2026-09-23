@@ -7,6 +7,13 @@ export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) 
   const hud = game.hud;
 
   hud.frames.push(engine.delta);
+
+  if (game.paused === true) {
+    hud.accumulator = 0;
+
+    return;
+  }
+
   hud.accumulator += engine.delta;
 
   while (hud.accumulator >= GEN_INTERVAL) {
