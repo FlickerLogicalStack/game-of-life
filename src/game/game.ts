@@ -4,6 +4,7 @@ import { render_cells } from './entities/cells/cells.renderer';
 import { render_debug } from './entities/debug/debug.renderer';
 import { render_hud } from './entities/hud/hud.renderer';
 import { render_background } from './entities/misc/background.renderer';
+import { render_field_border } from './entities/misc/field_border.renderer';
 import { handle_gameplay } from './game.gameplay';
 import { handle_input } from './game.inputs';
 import { create_game_state } from './game.state';
@@ -15,8 +16,12 @@ const on_frame = (engine: GOL.EngineContext, game: GOL.GameState) => {
   game.hud.renders = 0;
 
   render_background(engine, game);
+  render_field_border(engine, game);
   render_cells(engine, game);
-  render_hud(engine, game);
+
+  if (game.hud.enabled === 1) {
+    render_hud(engine, game);
+  }
 
   if (game.debug.enabled === 1) {
     render_debug(engine, game);

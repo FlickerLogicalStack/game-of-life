@@ -37,6 +37,11 @@ export const handle_input = (engine: GOL.EngineContext, game: GOL.GameState) => 
     camera.zoom *= 1 + ZOOM_SPEED * delta;
   }
 
+  if (kb.KeyH === true) {
+    kb.KeyH = false;
+    game.hud.enabled ^= 1;
+  }
+
   if (mouse.is_dragging === true) {
     camera.x += mouse.drag_x / camera.zoom;
     camera.y -= mouse.drag_y / camera.zoom;

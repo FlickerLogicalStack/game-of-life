@@ -7,7 +7,7 @@ export type Camera = {
 };
 
 export const create_camera = (): Camera => ({
-  x: -1600,
-  y: 846,
+  x: 0,
+  y: 0,
   zoom: 0.36,
 });

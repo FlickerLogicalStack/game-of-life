@@ -5,6 +5,7 @@ export type KeyboardInputs = {
   ArrowDown: boolean;
   Minus: boolean;
   Equal: boolean;
+  KeyH: boolean;
 };
 
 export type MouseInputs = {
@@ -27,6 +28,7 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
     ArrowDown: false,
     Minus: false,
     Equal: false,
+    KeyH: false,
   };
 
   const mouse: MouseInputs = {
@@ -37,6 +39,10 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
   };
 
   window.addEventListener('keydown', event => {
+    if (event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+
     const code = event.code;
 
     if (code === 'ArrowLeft') {
@@ -51,6 +57,8 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
       kb.Minus = true;
     } else if (code === 'Equal') {
       kb.Equal = true;
+    } else if (code === 'KeyH') {
+      kb.KeyH = true;
     }
   });
 
@@ -69,6 +77,8 @@ export const create_inputs = (element: HTMLCanvasElement): Inputs => {
       kb.Minus = false;
     } else if (code === 'Equal') {
       kb.Equal = false;
+    } else if (code === 'KeyH') {
+      kb.KeyH = false;
     }
   });
 
