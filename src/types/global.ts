@@ -15,6 +15,7 @@ declare global {
       debug: Debug;
       speed: number;
       last_speed: number;
+      auto_spawn: boolean;
     };
   }
 

@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'bun:test';
 
 import { Life } from './life';
-import { PATTERNS } from './life.patterns';
+
+const GLIDER = [1, 0, 2, 1, 0, 2, 1, 2, 2, 2];
 
 const set_cells = (life: Life, cells: ReadonlyArray<readonly [number, number]>) => {
   for (const [x, y] of cells) {
@@ -60,11 +61,19 @@ describe('Life', () => {
   test('a glider translates by one cell every four ticks', () => {
     const life = new Life(12, 12);
 
-    life.onPattern(PATTERNS.GLIDER_1, 1, 1);
+    life.spawn(GLIDER, 1, 1);
 
     life.tick(4);
 
     expect(alive_cells(life)).toBe('3,2 4,3 2,4 3,4 4,4');
+  });
+
+  test('spawn ignores out of bounds cells', () => {
+    const life = new Life(4, 4);
+
+    life.spawn(GLIDER, -1, -1);
+
+    expect(alive_cells(life)).toBe('1,0 0,1 1,1');
   });
 
   test('borders are dead, not wrapped', () => {

@@ -8,6 +8,7 @@ type ControlsRefs = {
   pause: HTMLButtonElement;
   center: HTMLButtonElement;
   hud: HTMLInputElement;
+  auto_spawn: HTMLInputElement;
 };
 
 let refs: ControlsRefs | null = null;
@@ -15,6 +16,7 @@ let refs: ControlsRefs | null = null;
 let last_speed = -1;
 let last_running = -1;
 let last_hud = -1;
+let last_auto_spawn = -1;
 
 export const mount_controls = (engine: GOL.EngineContext, game: GOL.GameState) => {
   const root = document.querySelector<HTMLElement>('#controls');
@@ -23,12 +25,13 @@ export const mount_controls = (engine: GOL.EngineContext, game: GOL.GameState) =
   const pause = document.querySelector<HTMLButtonElement>('#controls-pause');
   const center = document.querySelector<HTMLButtonElement>('#controls-center');
   const hud = document.querySelector<HTMLInputElement>('#controls-hud');
+  const auto_spawn = document.querySelector<HTMLInputElement>('#controls-auto-spawn');
 
-  if (!root || !speed || !speed_value || !pause || !center || !hud) {
+  if (!root || !speed || !speed_value || !pause || !center || !hud || !auto_spawn) {
     return;
   }
 
-  refs = { root, speed, speed_value, pause, center, hud };
+  refs = { root, speed, speed_value, pause, center, hud, auto_spawn };
 
   speed.addEventListener('input', () => {
     set_speed(game, Number(speed.value));
@@ -44,6 +47,10 @@ export const mount_controls = (engine: GOL.EngineContext, game: GOL.GameState) =
 
   hud.addEventListener('change', () => {
     game.hud.enabled = hud.checked ? 1 : 0;
+  });
+
+  auto_spawn.addEventListener('change', () => {
+    game.auto_spawn = auto_spawn.checked;
   });
 
   // Keep canvas interactions (zoom/pan) and hotkeys away from the panel.
@@ -82,5 +89,13 @@ export const sync_controls = (game: GOL.GameState) => {
     last_hud = game.hud.enabled;
 
     refs.hud.checked = game.hud.enabled === 1;
+  }
+
+  const auto_spawn = game.auto_spawn ? 1 : 0;
+
+  if (auto_spawn !== last_auto_spawn) {
+    last_auto_spawn = auto_spawn;
+
+    refs.auto_spawn.checked = game.auto_spawn === true;
   }
 };

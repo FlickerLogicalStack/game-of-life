@@ -30,17 +30,21 @@ export class Life {
     this.front[this.index(x, y)] = 1;
   };
 
-  onPattern = (pattern: string, x: number, y: number, fillChar = '1') => {
-    const lines = pattern.split('\n').filter(line => line.length > 0);
+  spawn = (cells: number[], x: number, y: number) => {
+    const stride = this.stride;
+    const width = this.width;
+    const height = this.height;
+    const front = this.front;
 
-    for (let py = 0; py < lines.length; py++) {
-      const line = lines[py];
+    for (let i = 0; i < cells.length; i += 2) {
+      const cell_x = x + cells[i];
+      const cell_y = y + cells[i + 1];
 
-      for (let px = 0; px < line.length; px++) {
-        if (line[px] === fillChar) {
-          this.on(x + px, y + py);
-        }
+      if (cell_x < 0 || cell_y < 0 || cell_x >= width || cell_y >= height) {
+        continue;
       }
+
+      front[(cell_y + 1) * stride + (cell_x + 1)] = 1;
     }
   };
 

@@ -19,6 +19,7 @@ export const create_game_state = (engine: GOL.EngineContext): GOL.GameState => {
     debug: create_debug(),
     speed: DEFAULT_SPEED,
     last_speed: DEFAULT_SPEED,
+    auto_spawn: true,
   };
 };
 

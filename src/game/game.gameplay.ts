@@ -1,7 +1,7 @@
-import { generate_glider } from './entities/life/glider.generator';
+import { generate_pattern } from './entities/pattern/pattern.generator';
 import { MAX_STEPS_PER_FRAME, step_simulation } from './entities/misc/step_simulation';
 
-const GLIDER_EVERY = 10;
+const SPAWN_EVERY = 10;
 
 export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) => {
   const hud = game.hud;
@@ -17,8 +17,8 @@ export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) 
 
     hud.ticks.push(performance.now() - started);
 
-    if (game.life.epoch % GLIDER_EVERY === 0) {
-      generate_glider(game.life);
+    if (game.auto_spawn === true && game.life.epoch % SPAWN_EVERY === 0) {
+      generate_pattern(game.life);
     }
   }
 };
