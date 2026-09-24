@@ -98,8 +98,6 @@ export const loop = async <TResources, TGame>(
     engine.delta_mul = engine.delta / 1000;
     engine.__prev_frame_time = time | 0;
 
-    engine.ctx.clearRect(0, 0, engine.canvas.width, engine.canvas.height);
-
     on_frame(engine, game);
 
     engine.__raf = requestAnimationFrame(frame);

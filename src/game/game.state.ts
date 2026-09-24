@@ -31,6 +31,7 @@ export const create_game_state = (engine: GOL.EngineContext): GOL.GameState => {
     last_speed: DEFAULT_SPEED,
     auto_spawn: true,
     border: false,
+    step_accumulator: 0,
   };
 };
 

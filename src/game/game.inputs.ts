@@ -1,4 +1,5 @@
 import { toggle_pause } from './entities/controls/controls';
+import { refresh_controls } from './entities/controls/controls.ui';
 import { center_camera } from './entities/misc/center_camera';
 import { clamp } from './entities/misc/utils';
 
@@ -42,6 +43,7 @@ export const handle_input = (engine: GOL.EngineContext, game: GOL.GameState) => 
   if (kb.KeyH === true) {
     kb.KeyH = false;
     game.hud.enabled ^= 1;
+    refresh_controls(game);
   }
 
   if (kb.KeyC === true) {
@@ -52,6 +54,7 @@ export const handle_input = (engine: GOL.EngineContext, game: GOL.GameState) => 
   if (kb.Space === true) {
     kb.Space = false;
     toggle_pause(game);
+    refresh_controls(game);
   }
 
   if (mouse.is_dragging === true) {

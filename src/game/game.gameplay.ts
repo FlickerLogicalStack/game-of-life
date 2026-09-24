@@ -6,11 +6,15 @@ const SPAWN_EVERY = 10;
 export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) => {
   const hud = game.hud;
 
-  hud.frames.push(engine.delta);
+  if (hud.enabled === 1) {
+    hud.frames.push(engine.delta);
+  }
 
-  const steps = step_simulation(hud, engine.delta, game.speed, MAX_STEPS_PER_FRAME);
+  const steps = step_simulation(game, engine.delta, game.speed, MAX_STEPS_PER_FRAME);
 
-  hud.steps.push(steps);
+  if (hud.enabled === 1) {
+    hud.steps.push(steps);
+  }
 
   for (let step = 0; step < steps; step++) {
     game.life.tick(1);

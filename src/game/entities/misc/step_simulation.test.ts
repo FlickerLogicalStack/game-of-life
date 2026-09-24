@@ -2,16 +2,16 @@ import { describe, expect, test } from 'bun:test';
 
 import { step_simulation } from './step_simulation';
 
-const state = () => ({ accumulator: 0 });
+const state = () => ({ step_accumulator: 0 });
 
 describe('step_simulation', () => {
   test('speed 0 never steps and clears the accumulator', () => {
     const s = state();
 
-    s.accumulator = 123;
+    s.step_accumulator = 123;
 
     expect(step_simulation(s, 100, 0, 32)).toBe(0);
-    expect(s.accumulator).toBe(0);
+    expect(s.step_accumulator).toBe(0);
   });
 
   test('60 gen/s steps once for a ~16.7ms delta', () => {

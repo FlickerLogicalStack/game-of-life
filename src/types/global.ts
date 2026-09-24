@@ -17,6 +17,7 @@ declare global {
       last_speed: number;
       auto_spawn: boolean;
       border: boolean;
+      step_accumulator: number;
     };
   }
 
