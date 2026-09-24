@@ -52,6 +52,7 @@ export const create_engine_context = (canvas: HTMLCanvasElement, resources: unkn
 
 export type GameStateModule<TGame> = {
   create: (engine: EngineContext) => TGame;
+  setup?: (engine: EngineContext, game: TGame) => void;
 };
 
 export const loop = async <TResources, TGame>(
@@ -83,6 +84,8 @@ export const loop = async <TResources, TGame>(
   engine.__prev_frame_time = performance.now() | 0;
 
   const game = game_state.create(engine);
+
+  game_state.setup?.(engine, game);
 
   window.__ENGINE__ = { engine, game };
 

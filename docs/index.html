@@ -27,8 +27,95 @@
         height: 100vh;
         image-rendering: pixelated;
       }
+
+      .controls {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid rgba(96, 121, 242, 0.25);
+        border-radius: 8px;
+        background: rgba(10, 14, 22, 0.72);
+        color: #cfd6e6;
+        font:
+          12px/1.4 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        user-select: none;
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .controls:hover,
+      .controls:focus-within {
+        opacity: 1;
+      }
+
+      .controls__body {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        justify-items: start;
+        gap: 8px 10px;
+      }
+
+      .controls__field {
+        display: contents;
+      }
+
+      .controls__control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .controls__key {
+        opacity: 0.6;
+      }
+
+      .controls__value {
+        min-width: 64px;
+        text-align: right;
+        opacity: 0.9;
+      }
+
+      .controls input[type='range'] {
+        width: 140px;
+        accent-color: #6079f2;
+      }
+
+      .controls button {
+        padding: 3px 8px;
+        border: 1px solid rgba(96, 121, 242, 0.3);
+        border-radius: 6px;
+        background: rgba(96, 121, 242, 0.12);
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .controls button:hover {
+        background: rgba(96, 121, 242, 0.22);
+      }
+
+      .controls input[type='checkbox'] {
+        accent-color: #6079f2;
+      }
+
+      .controls--paused {
+        border-color: rgba(96, 121, 242, 0.55);
+      }
+
+      .controls--paused .controls__value {
+        color: #8fb0ff;
+      }
     </style>
-  <script type="module">var v=(t)=>{let e={ArrowLeft:!1,ArrowRight:!1,ArrowUp:!1,ArrowDown:!1,Minus:!1,Equal:!1,KeyH:!1,KeyC:!1,Space:!1},r={is_dragging:!1,drag_x:0,drag_y:0,wheel:0};return window.addEventListener("keydown",(a)=>{if(a.ctrlKey||a.metaKey||a.altKey)return;let o=a.code;if(o==="ArrowLeft")e.ArrowLeft=!0;else if(o==="ArrowRight")e.ArrowRight=!0;else if(o==="ArrowUp")e.ArrowUp=!0;else if(o==="ArrowDown")e.ArrowDown=!0;else if(o==="Minus")e.Minus=!0;else if(o==="Equal")e.Equal=!0;else if(o==="KeyH")e.KeyH=!0;else if(o==="KeyC")e.KeyC=!0;else if(o==="Space")a.preventDefault(),e.Space=!0}),window.addEventListener("keyup",(a)=>{let o=a.code;if(o==="ArrowLeft")e.ArrowLeft=!1;else if(o==="ArrowRight")e.ArrowRight=!1;else if(o==="ArrowUp")e.ArrowUp=!1;else if(o==="ArrowDown")e.ArrowDown=!1;else if(o==="Minus")e.Minus=!1;else if(o==="Equal")e.Equal=!1;else if(o==="KeyH")e.KeyH=!1;else if(o==="KeyC")e.KeyC=!1;else if(o==="Space")e.Space=!1}),t.addEventListener("mousedown",(a)=>{if(a.button===0)r.is_dragging=!0}),document.addEventListener("mousemove",(a)=>{if(r.is_dragging===!1)return;r.drag_x+=a.movementX,r.drag_y+=a.movementY}),document.addEventListener("mouseup",()=>{r.is_dragging=!1}),document.addEventListener("wheel",(a)=>{r.wheel+=a.deltaY}),{kb:e,mouse:r}};var A=100,oe=(t,e)=>{let r=t.getContext("2d");if(!r)throw Error("No 2d context (canvas.getContext(2d))");return{__raf:0,__prev_frame_time:0,canvas:{element:t,width:t.width,height:t.height},ctx:r,inputs:v(t),frame:0,delta:0,delta_mul:0,resources:e}},C=async(t,e,r,a)=>{let o=t(),n=oe(o,await e()),i=()=>{n.canvas.width=o.clientWidth,n.canvas.height=o.clientHeight,o.width=n.canvas.width,o.height=n.canvas.height};window.addEventListener("resize",i),document.addEventListener("visibilitychange",()=>{n.__prev_frame_time=performance.now()|0}),i(),n.__prev_frame_time=performance.now()|0;let s=r.create(n);window.__ENGINE__={engine:n,game:s};let c=(m)=>{n.frame+=1;let f=m-n.__prev_frame_time|0;n.delta=f>A?A:f,n.delta_mul=n.delta/1000,n.__prev_frame_time=m|0,n.ctx.clearRect(0,0,n.canvas.width,n.canvas.height),a(n,s),n.__raf=requestAnimationFrame(c)};requestAnimationFrame(c)};var G=async()=>({});var d=1,R=()=>({x:0,y:0,zoom:0.36});var l=10,T=["#263133","#6079f2","#6079f2","#6079f2","#6079f2"],S=(t,e)=>{let r=t.ctx,{camera:a,life:o}=e,n=t.canvas.width,i=t.canvas.height,s=a.zoom,c=l*s,m=c,f=a.x*s+n/2*(d-s),E=-a.y*s+i/2*(d-s),X=Math.max(0,Math.floor((-c-f)/c)),Y=Math.min(o.width-1,Math.ceil((n+c-f)/c)),W=Math.max(0,Math.floor((-m-E)/m)),j=Math.min(o.height-1,Math.ceil((i+m-E)/m)),{front:V,stride:J}=o,L="";for(let h=W;h<=j;h++){let Q=(h+1)*J+1,ee=h*l;for(let u=X;u<=Y;u++)if(V[Q+u]===1){let y=T[u*h%T.length];if(y!==L)L=y,r.fillStyle=y;let te=(u*l+a.x)*s+n/2*(d-s),re=(ee-a.y)*s+i/2*(d-s);r.fillRect(te,re,c,m),e.hud.renders++}}};var O=(t,e,r,a,o)=>{t.strokeStyle="red",t.lineWidth=1,t.strokeRect(e,r,a,o)};var M=(t,e)=>{let r=e.camera,a=t.canvas.width,o=t.canvas.height,n=r.zoom,i=r.x*n+a/2*(d-n),s=-r.y*n+o/2*(d-n);O(t.ctx,i,s,e.life.width*l*n,e.life.height*l*n),t.ctx.fillStyle="red",t.ctx.font="16px monospace",t.ctx.fillText(`board: ${e.life.width}x${e.life.height}  alive: -`,i+4,s-6)};var D=(t,e)=>{let r=t.ctx,{camera:a,hud:o}=e,n=o.frames.avg(),i=o.ticks.avg();r.fillStyle="white",r.font="20px monospace";let s=5;r.fillText(`fps: ${(n>0?1000/n:0).toFixed(1)}`,10,s+=20),r.fillText(`aps: ${(i>0?1000/i:0).toFixed(1)}`,10,s+=20),r.fillText(`renders: ${o.renders}`,10,s+=20),s+=20,r.fillText(`x: ${a.x.toFixed(3)}`,10,s+=20),r.fillText(`y: ${a.y.toFixed(3)}`,10,s+=20),r.fillText(`zoom: ${a.zoom.toFixed(3)}`,10,s+=20),s+=20,r.fillText(`epoch: ${e.life.epoch}`,10,s+=20)};var I=(t,e)=>{t.ctx.fillStyle="black",t.ctx.fillRect(0,0,t.canvas.width,t.canvas.height)};var ne="rgba(96, 121, 242, 0.25)",ae=1,k=(t,e)=>{let{camera:r,life:a}=e,o=t.canvas.width,n=t.canvas.height,i=r.zoom,s=r.x*i+o/2*(d-i),c=-r.y*i+n/2*(d-i);t.ctx.strokeStyle=ne,t.ctx.lineWidth=ae,t.ctx.strokeRect(s,c,a.width*l*i,a.height*l*i)};var p={GLIDER_1:`010
+  <script type="module">var G=(t)=>{let e={ArrowLeft:!1,ArrowRight:!1,ArrowUp:!1,ArrowDown:!1,Minus:!1,Equal:!1,KeyH:!1,KeyC:!1,Space:!1},o={is_dragging:!1,drag_x:0,drag_y:0,wheel:0};return window.addEventListener("keydown",(s)=>{if(s.ctrlKey||s.metaKey||s.altKey)return;let r=s.code;if(r==="ArrowLeft")e.ArrowLeft=!0;else if(r==="ArrowRight")e.ArrowRight=!0;else if(r==="ArrowUp")e.ArrowUp=!0;else if(r==="ArrowDown")e.ArrowDown=!0;else if(r==="Minus")e.Minus=!0;else if(r==="Equal")e.Equal=!0;else if(r==="KeyH")e.KeyH=!0;else if(r==="KeyC")e.KeyC=!0;else if(r==="Space")s.preventDefault(),e.Space=!0}),window.addEventListener("keyup",(s)=>{let r=s.code;if(r==="ArrowLeft")e.ArrowLeft=!1;else if(r==="ArrowRight")e.ArrowRight=!1;else if(r==="ArrowUp")e.ArrowUp=!1;else if(r==="ArrowDown")e.ArrowDown=!1;else if(r==="Minus")e.Minus=!1;else if(r==="Equal")e.Equal=!1;else if(r==="KeyH")e.KeyH=!1;else if(r==="KeyC")e.KeyC=!1;else if(r==="Space")e.Space=!1}),t.addEventListener("mousedown",(s)=>{if(s.button===0)o.is_dragging=!0}),document.addEventListener("mousemove",(s)=>{if(o.is_dragging===!1)return;o.drag_x+=s.movementX,o.drag_y+=s.movementY}),document.addEventListener("mouseup",()=>{o.is_dragging=!1}),document.addEventListener("wheel",(s)=>{o.wheel+=s.deltaY}),{kb:e,mouse:o}};var A=100,fe=(t,e)=>{let o=t.getContext("2d");if(!o)throw Error("No 2d context (canvas.getContext(2d))");return{__raf:0,__prev_frame_time:0,canvas:{element:t,width:t.width,height:t.height},ctx:o,inputs:G(t),frame:0,delta:0,delta_mul:0,resources:e}},C=async(t,e,o,s)=>{let r=t(),n=fe(r,await e()),i=()=>{n.canvas.width=r.clientWidth,n.canvas.height=r.clientHeight,r.width=n.canvas.width,r.height=n.canvas.height};window.addEventListener("resize",i),document.addEventListener("visibilitychange",()=>{n.__prev_frame_time=performance.now()|0}),i(),n.__prev_frame_time=performance.now()|0;let a=o.create(n);o.setup?.(n,a),window.__ENGINE__={engine:n,game:a};let c=(d)=>{n.frame+=1;let u=d-n.__prev_frame_time|0;n.delta=u>A?A:u,n.delta_mul=n.delta/1000,n.__prev_frame_time=d|0,n.ctx.clearRect(0,0,n.canvas.width,n.canvas.height),s(n,a),n.__raf=requestAnimationFrame(c)};requestAnimationFrame(c)};var M=async()=>({});var p=1,R=()=>({x:0,y:0,zoom:0.36});var l=10,k=["#263133","#6079f2","#6079f2","#6079f2","#6079f2"],O=(t,e)=>{let o=t.ctx,{camera:s,life:r}=e,n=t.canvas.width,i=t.canvas.height,a=s.zoom,c=l*a,d=c,u=s.x*a+n/2*(p-a),S=-s.y*a+i/2*(p-a),ne=Math.max(0,Math.floor((-c-u)/c)),se=Math.min(r.width-1,Math.ceil((n+c-u)/c)),ae=Math.max(0,Math.floor((-d-S)/d)),ie=Math.min(r.height-1,Math.ceil((i+d-S)/d)),{front:ce,stride:le}=r,T="";for(let h=ae;h<=ie;h++){let de=(h+1)*le+1,pe=h*l;for(let _=ne;_<=se;_++)if(ce[de+_]===1){let w=k[_*h%k.length];if(w!==T)T=w,o.fillStyle=w;let ue=(_*l+s.x)*a+n/2*(p-a),me=(pe-s.y)*a+i/2*(p-a);o.fillRect(ue,me,c,d),e.hud.renders++}}};var f=(t,e,o,s)=>{t.x=o/2-e.width*l/2,t.y=e.height*l/2-s/2};var v=60;var D=(t,e)=>{if(e>0)t.last_speed=e;t.speed=e},b=(t)=>{t.speed=t.speed>0?0:t.last_speed||60};var m=null,H=-1,I=-1,P=-1,U=(t,e)=>{let o=document.querySelector("#controls"),s=document.querySelector("#controls-speed"),r=document.querySelector("#controls-speed-value"),n=document.querySelector("#controls-pause"),i=document.querySelector("#controls-center"),a=document.querySelector("#controls-hud");if(!o||!s||!r||!n||!i||!a)return;m={root:o,speed:s,speed_value:r,pause:n,center:i,hud:a},s.addEventListener("input",()=>{D(e,Number(s.value))}),n.addEventListener("click",()=>{b(e)}),i.addEventListener("click",()=>{f(e.camera,e.life,t.canvas.width,t.canvas.height)}),a.addEventListener("change",()=>{e.hud.enabled=a.checked?1:0}),o.addEventListener("wheel",(c)=>c.stopPropagation()),o.addEventListener("keydown",(c)=>c.stopPropagation()),o.addEventListener("keyup",(c)=>c.stopPropagation())},K=(t)=>{if(!m)return;let e=Math.round(t.speed);if(e!==H){if(H=e,m.speed.value!==String(e))m.speed.value=String(e);m.speed_value.textContent=e>0?`${e} gen/s`:"paused"}let o=t.speed>0?1:0;if(o!==I)I=o,m.pause.textContent=o?"pause":"resume",m.root.classList.toggle("controls--paused",o===0);if(t.hud.enabled!==P)P=t.hud.enabled,m.hud.checked=t.hud.enabled===1};var z=(t,e,o,s,r)=>{t.strokeStyle="red",t.lineWidth=1,t.strokeRect(e,o,s,r)};var q=(t,e)=>{let o=e.camera,s=t.canvas.width,r=t.canvas.height,n=o.zoom,i=o.x*n+s/2*(p-n),a=-o.y*n+r/2*(p-n);z(t.ctx,i,a,e.life.width*l*n,e.life.height*l*n),t.ctx.fillStyle="red",t.ctx.font="16px monospace",t.ctx.fillText(`board: ${e.life.width}x${e.life.height}  alive: -`,i+4,a-6)};var F=(t,e)=>{let o=t.ctx,{camera:s,hud:r}=e,n=r.frames.avg(),i=r.ticks.avg();o.fillStyle="white",o.font="20px monospace";let a=5;o.fillText(`fps: ${(n>0?1000/n:0).toFixed(1)}`,10,a+=20),o.fillText(`aps: ${(i>0?1000/i:0).toFixed(1)}`,10,a+=20),o.fillText(`renders: ${r.renders}`,10,a+=20),a+=20,o.fillText(`x: ${s.x.toFixed(3)}`,10,a+=20),o.fillText(`y: ${s.y.toFixed(3)}`,10,a+=20),o.fillText(`zoom: ${s.zoom.toFixed(3)}`,10,a+=20),a+=20,o.fillText(`epoch: ${e.life.epoch}`,10,a+=20)};var N=(t,e)=>{t.ctx.fillStyle="black",t.ctx.fillRect(0,0,t.canvas.width,t.canvas.height)};var he="rgba(96, 121, 242, 0.25)",_e=1,B=(t,e)=>{let{camera:o,life:s}=e,r=t.canvas.width,n=t.canvas.height,i=o.zoom,a=o.x*i+r/2*(p-i),c=-o.y*i+n/2*(p-i);t.ctx.strokeStyle=he,t.ctx.lineWidth=_e,t.ctx.strokeRect(a,c,s.width*l*i,s.height*l*i)};var x={GLIDER_1:`010
 001
 111`,GLIDER_2:`111
 001
@@ -36,11 +123,38 @@
 101
 110`,GLIDER_4:`110
 101
-100`};var _=(t,e)=>Math.floor(Math.random()*(e-t)+t),H=(t,e,r)=>{if(e<t)return t;else if(e>r)return r;return e};class x{length;#e;#t=0;constructor(t){this.length=t,this.#e=new Uint32Array(t)}push=(t)=>{this.#e[this.#t]=t,this.#t=(this.#t+1)%this.length};avg=()=>{let t=0,e=0,r=this.#e.length;while(e<r)t+=this.#e[e++];return r?t/r:0}}var K=[p.GLIDER_1,p.GLIDER_2,p.GLIDER_3,p.GLIDER_4],w=5,U=(t)=>{let e=_(w,t.width-1-w),r=_(w,t.height-1-w);t.onPattern(K[_(0,K.length)],e,r)};var P=16.666666666666668,se=10,z=(t,e)=>{let r=e.hud;if(r.frames.push(t.delta),e.paused===!0){r.accumulator=0;return}r.accumulator+=t.delta;while(r.accumulator>=P){let a=performance.now();if(e.life.tick(1),r.ticks.push(performance.now()-a),r.accumulator-=P,e.life.epoch%se===0)U(e.life)}};var b=(t,e,r,a)=>{t.x=r/2-e.width*l/2,t.y=e.height*l/2-a/2};var ie=600,N=1.5,ce=0.02,le=40,q=(t,e)=>{let{kb:r,mouse:a}=t.inputs,o=e.camera,n=t.delta_mul,i=ie*n/o.zoom;if(r.ArrowLeft===!0)o.x+=i;if(r.ArrowRight===!0)o.x-=i;if(r.ArrowUp===!0)o.y-=i;if(r.ArrowDown===!0)o.y+=i;if(r.Minus===!0)o.zoom/=1+N*n;if(r.Equal===!0)o.zoom*=1+N*n;if(r.KeyH===!0)r.KeyH=!1,e.hud.enabled^=1;if(r.KeyC===!0)r.KeyC=!1,b(o,e.life,t.canvas.width,t.canvas.height);if(r.Space===!0)r.Space=!1,e.paused=!e.paused;if(a.is_dragging===!0)o.x+=a.drag_x/o.zoom,o.y-=a.drag_y/o.zoom;if(a.wheel!==0)o.zoom*=a.wheel<0?1.1:0.9090909090909091;o.zoom=H(ce,o.zoom,le),a.drag_x=0,a.drag_y=0,a.wheel=0};var Z=()=>({enabled:0});var F=()=>({enabled:1,frames:new x(64),ticks:new x(128),accumulator:0,renders:0});class g{width;height;stride;epoch=0;front;#e;constructor(t=16,e=16){this.width=t,this.height=e,this.stride=t+2;let r=(t+2)*(e+2);this.front=new Uint8Array(r),this.#e=new Uint8Array(r)}index=(t,e)=>(e+1)*this.stride+(t+1);on=(t,e)=>{if(t<0||e<0||t>=this.width||e>=this.height)return;this.front[this.index(t,e)]=1};onPattern=(t,e,r,a="1")=>{let o=t.split(`
-`).filter((n)=>n.length>0);for(let n=0;n<o.length;n++){let i=o[n];for(let s=0;s<i.length;s++)if(i[s]===a)this.on(e+s,r+n)}};is_alive=(t,e)=>t>=0&&e>=0&&t<this.width&&e<this.height&&this.front[this.index(t,e)]===1;tick=(t=1)=>{let e=this.width,r=this.height,a=this.stride;for(let o=0;o<t;o++){let n=this.front,i=this.#e;for(let s=1;s<=r;s++){let c=s*a+1;for(let m=1;m<=e;m++,c++){let f=n[c-a-1]+n[c-a]+n[c-a+1]+n[c-1]+n[c+1]+n[c+a-1]+n[c+a]+n[c+a+1];i[c]=f===3||f===2&&n[c]===1?1:0}}this.front=i,this.#e=n,this.epoch++}};__print=()=>{console.log("[EPOCH]",this.epoch);for(let t=0;t<this.height;t++){let e="";for(let r=0;r<this.width;r++)e+=this.is_alive(r,t)?"#":" ";console.log(e)}}}var B=(t)=>{let e=new g(256,128),r=R();return b(r,e,t.canvas.width,t.canvas.height),{life:e,camera:r,hud:F(),debug:Z(),paused:!1}};var me=(t,e)=>{if(q(t,e),z(t,e),e.hud.renders=0,I(t,e),k(t,e),S(t,e),e.hud.enabled===1)D(t,e);if(e.debug.enabled===1)M(t,e)};C(()=>document.querySelector("canvas"),G,{create:B},me);</script></head>
+100`};var y=(t,e)=>Math.floor(Math.random()*(e-t)+t),Z=(t,e,o)=>{if(e<t)return t;else if(e>o)return o;return e};class g{length;#e;#t=0;constructor(t){this.length=t,this.#e=new Uint32Array(t)}push=(t)=>{this.#e[this.#t]=t,this.#t=(this.#t+1)%this.length};avg=()=>{let t=0,e=0,o=this.#e.length;while(e<o)t+=this.#e[e++];return o?t/o:0}}var X=[x.GLIDER_1,x.GLIDER_2,x.GLIDER_3,x.GLIDER_4],E=5,Y=(t)=>{let e=y(E,t.width-1-E),o=y(E,t.height-1-E);t.onPattern(X[y(0,X.length)],e,o)};var j=32,W=(t,e,o,s)=>{if(o<=0)return t.accumulator=0,0;let r=1000/o,n=t.accumulator+e,i=0;while(n>=r&&i<s)n-=r,i+=1;return t.accumulator=n,i};var xe=10,J=(t,e)=>{let o=e.hud;o.frames.push(t.delta);let s=W(o,t.delta,e.speed,j);for(let r=0;r<s;r++){let n=performance.now();if(e.life.tick(1),o.ticks.push(performance.now()-n),e.life.epoch%xe===0)Y(e.life)}};var be=600,V=1.5,ye=0.02,ge=40,Q=(t,e)=>{let{kb:o,mouse:s}=t.inputs,r=e.camera,n=t.delta_mul,i=be*n/r.zoom;if(o.ArrowLeft===!0)r.x+=i;if(o.ArrowRight===!0)r.x-=i;if(o.ArrowUp===!0)r.y-=i;if(o.ArrowDown===!0)r.y+=i;if(o.Minus===!0)r.zoom/=1+V*n;if(o.Equal===!0)r.zoom*=1+V*n;if(o.KeyH===!0)o.KeyH=!1,e.hud.enabled^=1;if(o.KeyC===!0)o.KeyC=!1,f(r,e.life,t.canvas.width,t.canvas.height);if(o.Space===!0)o.Space=!1,b(e);if(s.is_dragging===!0)r.x+=s.drag_x/r.zoom,r.y-=s.drag_y/r.zoom;if(s.wheel!==0)r.zoom*=s.wheel<0?1.1:0.9090909090909091;r.zoom=Z(ye,r.zoom,ge),s.drag_x=0,s.drag_y=0,s.wheel=0};var ee=()=>({enabled:0});var te=()=>({enabled:0,frames:new g(64),ticks:new g(128),accumulator:0,renders:0});class L{width;height;stride;epoch=0;front;#e;constructor(t=16,e=16){this.width=t,this.height=e,this.stride=t+2;let o=(t+2)*(e+2);this.front=new Uint8Array(o),this.#e=new Uint8Array(o)}index=(t,e)=>(e+1)*this.stride+(t+1);on=(t,e)=>{if(t<0||e<0||t>=this.width||e>=this.height)return;this.front[this.index(t,e)]=1};onPattern=(t,e,o,s="1")=>{let r=t.split(`
+`).filter((n)=>n.length>0);for(let n=0;n<r.length;n++){let i=r[n];for(let a=0;a<i.length;a++)if(i[a]===s)this.on(e+a,o+n)}};is_alive=(t,e)=>t>=0&&e>=0&&t<this.width&&e<this.height&&this.front[this.index(t,e)]===1;tick=(t=1)=>{let e=this.width,o=this.height,s=this.stride;for(let r=0;r<t;r++){let n=this.front,i=this.#e;for(let a=1;a<=o;a++){let c=a*s+1;for(let d=1;d<=e;d++,c++){let u=n[c-s-1]+n[c-s]+n[c-s+1]+n[c-1]+n[c+1]+n[c+s-1]+n[c+s]+n[c+s+1];i[c]=u===3||u===2&&n[c]===1?1:0}}this.front=i,this.#e=n,this.epoch++}};__print=()=>{console.log("[EPOCH]",this.epoch);for(let t=0;t<this.height;t++){let e="";for(let o=0;o<this.width;o++)e+=this.is_alive(o,t)?"#":" ";console.log(e)}}}var oe=(t)=>{let e=new L(256,128),o=R();return f(o,e,t.canvas.width,t.canvas.height),{life:e,camera:o,hud:te(),debug:ee(),speed:v,last_speed:v}},re=(t,e)=>{U(t,e)};var Ee=(t,e)=>{if(Q(t,e),J(t,e),K(e),e.hud.renders=0,N(t,e),B(t,e),O(t,e),e.hud.enabled===1)F(t,e);if(e.debug.enabled===1)q(t,e)};C(()=>document.querySelector("canvas"),M,{create:oe,setup:re},Ee);</script></head>
 
   <body>
     <canvas id="canvas"></canvas>
+
+    <div id="controls" class="controls">
+      <div class="controls__body">
+        <div class="controls__field">
+          <span class="controls__key">speed:</span>
+          <div class="controls__control">
+            <input id="controls-speed" type="range" min="0" max="144" step="1" value="60" />
+            <span id="controls-speed-value" class="controls__value">60 gen/s</span>
+          </div>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">pause:</span>
+          <button id="controls-pause" type="button">pause</button>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">center:</span>
+          <button id="controls-center" type="button">center</button>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">hud:</span>
+          <input id="controls-hud" type="checkbox" checked aria-label="hud" />
+        </div>
+      </div>
+    </div>
 
     
   </body>

@@ -1,6 +1,6 @@
 import { generate_glider } from './entities/life/glider.generator';
+import { MAX_STEPS_PER_FRAME, step_simulation } from './entities/misc/step_simulation';
 
-const GEN_INTERVAL = 1000 / 60;
 const GLIDER_EVERY = 10;
 
 export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) => {
@@ -8,21 +8,14 @@ export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) 
 
   hud.frames.push(engine.delta);
 
-  if (game.paused === true) {
-    hud.accumulator = 0;
+  const steps = step_simulation(hud, engine.delta, game.speed, MAX_STEPS_PER_FRAME);
 
-    return;
-  }
-
-  hud.accumulator += engine.delta;
-
-  while (hud.accumulator >= GEN_INTERVAL) {
+  for (let step = 0; step < steps; step++) {
     const started = performance.now();
 
     game.life.tick(1);
 
     hud.ticks.push(performance.now() - started);
-    hud.accumulator -= GEN_INTERVAL;
 
     if (game.life.epoch % GLIDER_EVERY === 0) {
       generate_glider(game.life);

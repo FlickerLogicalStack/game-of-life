@@ -9,7 +9,7 @@ export type Hud = {
 };
 
 export const create_hud = (): Hud => ({
-  enabled: 1,
+  enabled: 0,
   frames: new LoopedArray(64),
   ticks: new LoopedArray(128),
   accumulator: 0,

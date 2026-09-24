@@ -27,11 +27,125 @@
         height: 100vh;
         image-rendering: pixelated;
       }
+
+      .controls {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid rgba(96, 121, 242, 0.25);
+        border-radius: 8px;
+        background: rgba(10, 14, 22, 0.72);
+        color: #cfd6e6;
+        font:
+          12px/1.4 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          monospace;
+        user-select: none;
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .controls:hover,
+      .controls:focus-within {
+        opacity: 1;
+      }
+
+      .controls__body {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        justify-items: start;
+        gap: 8px 10px;
+      }
+
+      .controls__field {
+        display: contents;
+      }
+
+      .controls__control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .controls__key {
+        opacity: 0.6;
+      }
+
+      .controls__value {
+        min-width: 64px;
+        text-align: right;
+        opacity: 0.9;
+      }
+
+      .controls input[type='range'] {
+        width: 140px;
+        accent-color: #6079f2;
+      }
+
+      .controls button {
+        padding: 3px 8px;
+        border: 1px solid rgba(96, 121, 242, 0.3);
+        border-radius: 6px;
+        background: rgba(96, 121, 242, 0.12);
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .controls button:hover {
+        background: rgba(96, 121, 242, 0.22);
+      }
+
+      .controls input[type='checkbox'] {
+        accent-color: #6079f2;
+      }
+
+      .controls--paused {
+        border-color: rgba(96, 121, 242, 0.55);
+      }
+
+      .controls--paused .controls__value {
+        color: #8fb0ff;
+      }
     </style>
   </head>
 
   <body>
     <canvas id="canvas"></canvas>
+
+    <div id="controls" class="controls">
+      <div class="controls__body">
+        <div class="controls__field">
+          <span class="controls__key">speed:</span>
+          <div class="controls__control">
+            <input id="controls-speed" type="range" min="0" max="144" step="1" value="60" />
+            <span id="controls-speed-value" class="controls__value">60 gen/s</span>
+          </div>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">pause:</span>
+          <button id="controls-pause" type="button">pause</button>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">center:</span>
+          <button id="controls-center" type="button">center</button>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">hud:</span>
+          <input id="controls-hud" type="checkbox" checked aria-label="hud" />
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="./game/game.ts"></script>
   </body>
