@@ -1,5 +1,5 @@
 import { render_debug_frame } from '../misc/debug_frame.renderer';
-import { ZOOM_BREAKPOINT } from '../camera/camera';
+import { to_screen_x, to_screen_y } from '../camera/camera';
 import { CELL_RECT_SIZE } from '../cells/cells.renderer';
 
 export const render_debug = (engine: GOL.EngineContext, game: GOL.GameState) => {
@@ -9,8 +9,8 @@ export const render_debug = (engine: GOL.EngineContext, game: GOL.GameState) => 
   const height = engine.canvas.height;
   const zoom = camera.zoom;
 
-  const canvas_x = camera.x * zoom + (width / 2) * (ZOOM_BREAKPOINT - zoom);
-  const canvas_y = -camera.y * zoom + (height / 2) * (ZOOM_BREAKPOINT - zoom);
+  const canvas_x = to_screen_x(camera, width, 0);
+  const canvas_y = to_screen_y(camera, height, 0);
 
   render_debug_frame(
     engine.ctx,

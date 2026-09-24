@@ -3,7 +3,7 @@ import { LoopedArray } from '../misc/utils';
 export type Hud = {
   enabled: number;
   frames: LoopedArray;
-  ticks: LoopedArray;
+  steps: LoopedArray;
   accumulator: number;
   renders: number;
 };
@@ -11,7 +11,7 @@ export type Hud = {
 export const create_hud = (): Hud => ({
   enabled: 0,
   frames: new LoopedArray(64),
-  ticks: new LoopedArray(128),
+  steps: new LoopedArray(64),
   accumulator: 0,
   renders: 0,
 });

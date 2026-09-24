@@ -1,40 +1,40 @@
 export class Life {
   readonly width: number;
   readonly height: number;
-  readonly stride: number;
+  readonly row_size: number;
 
   epoch = 0;
 
-  front: Uint8Array;
+  current_buffer: Uint8Array;
 
-  #back: Uint8Array;
+  #next_buffer: Uint8Array;
 
   constructor(width = 16, height = 16) {
     this.width = width;
     this.height = height;
-    this.stride = width + 2;
+    this.row_size = width + 2;
 
     const size = (width + 2) * (height + 2);
 
-    this.front = new Uint8Array(size);
-    this.#back = new Uint8Array(size);
+    this.current_buffer = new Uint8Array(size);
+    this.#next_buffer = new Uint8Array(size);
   }
 
-  index = (x: number, y: number) => (y + 1) * this.stride + (x + 1);
+  index = (x: number, y: number) => (y + 1) * this.row_size + (x + 1);
 
   on = (x: number, y: number) => {
     if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
       return;
     }
 
-    this.front[this.index(x, y)] = 1;
+    this.current_buffer[this.index(x, y)] = 1;
   };
 
   spawn = (cells: number[], x: number, y: number) => {
-    const stride = this.stride;
+    const row_size = this.row_size;
     const width = this.width;
     const height = this.height;
-    const front = this.front;
+    const current_buffer = this.current_buffer;
 
     for (let i = 0; i < cells.length; i += 2) {
       const cell_x = x + cells[i];
@@ -44,42 +44,42 @@ export class Life {
         continue;
       }
 
-      front[(cell_y + 1) * stride + (cell_x + 1)] = 1;
+      current_buffer[(cell_y + 1) * row_size + (cell_x + 1)] = 1;
     }
   };
 
   is_alive = (x: number, y: number) =>
-    x >= 0 && y >= 0 && x < this.width && y < this.height && this.front[this.index(x, y)] === 1;
+    x >= 0 && y >= 0 && x < this.width && y < this.height && this.current_buffer[this.index(x, y)] === 1;
 
   tick = (n = 1) => {
     const width = this.width;
     const height = this.height;
-    const stride = this.stride;
+    const row_size = this.row_size;
 
     for (let iteration = 0; iteration < n; iteration++) {
-      const src = this.front;
-      const dst = this.#back;
+      const current_buffer = this.current_buffer;
+      const next_buffer = this.#next_buffer;
 
       for (let y = 1; y <= height; y++) {
-        let idx = y * stride + 1;
+        let cell_index = y * row_size + 1;
 
-        for (let x = 1; x <= width; x++, idx++) {
+        for (let x = 1; x <= width; x++, cell_index++) {
           const neighbors =
-            src[idx - stride - 1] +
-            src[idx - stride] +
-            src[idx - stride + 1] +
-            src[idx - 1] +
-            src[idx + 1] +
-            src[idx + stride - 1] +
-            src[idx + stride] +
-            src[idx + stride + 1];
+            current_buffer[cell_index - row_size - 1] +
+            current_buffer[cell_index - row_size] +
+            current_buffer[cell_index - row_size + 1] +
+            current_buffer[cell_index - 1] +
+            current_buffer[cell_index + 1] +
+            current_buffer[cell_index + row_size - 1] +
+            current_buffer[cell_index + row_size] +
+            current_buffer[cell_index + row_size + 1];
 
-          dst[idx] = neighbors === 3 || (neighbors === 2 && src[idx] === 1) ? 1 : 0;
+          next_buffer[cell_index] = neighbors === 3 || (neighbors === 2 && current_buffer[cell_index] === 1) ? 1 : 0;
         }
       }
 
-      this.front = dst;
-      this.#back = src;
+      this.current_buffer = next_buffer;
+      this.#next_buffer = current_buffer;
       this.epoch++;
     }
   };

@@ -6,7 +6,7 @@ export const render_hud = (engine: GOL.EngineContext, game: GOL.GameState) => {
   const hud = game.hud;
 
   const fps_avg = hud.frames.avg();
-  const aps_avg = hud.ticks.avg();
+  const steps_avg = hud.steps.avg();
 
   ctx.fillStyle = 'white';
   ctx.font = '20px monospace';
@@ -14,7 +14,7 @@ export const render_hud = (engine: GOL.EngineContext, game: GOL.GameState) => {
   let cursor = 5;
 
   ctx.fillText(`fps: ${(fps_avg > 0 ? 1000 / fps_avg : 0).toFixed(1)}`, 10, (cursor += HUD_STEP));
-  ctx.fillText(`aps: ${(aps_avg > 0 ? 1000 / aps_avg : 0).toFixed(1)}`, 10, (cursor += HUD_STEP));
+  ctx.fillText(`aps: ${(fps_avg > 0 ? (steps_avg / fps_avg) * 1000 : 0).toFixed(1)}`, 10, (cursor += HUD_STEP));
   ctx.fillText(`renders: ${hud.renders}`, 10, (cursor += HUD_STEP));
   cursor += HUD_STEP;
   ctx.fillText(`x: ${camera.x.toFixed(3)}`, 10, (cursor += HUD_STEP));

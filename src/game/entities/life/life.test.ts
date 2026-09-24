@@ -98,7 +98,7 @@ describe('Life', () => {
     expect(alive_cells(life)).toBe('0,0');
   });
 
-  test('non-square boards use width as the row stride', () => {
+  test('non-square boards use width as the row size', () => {
     const life = new Life(6, 4);
 
     set_cells(life, [

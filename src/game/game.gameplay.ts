@@ -10,12 +10,10 @@ export const handle_gameplay = (engine: GOL.EngineContext, game: GOL.GameState) 
 
   const steps = step_simulation(hud, engine.delta, game.speed, MAX_STEPS_PER_FRAME);
 
+  hud.steps.push(steps);
+
   for (let step = 0; step < steps; step++) {
-    const started = performance.now();
-
     game.life.tick(1);
-
-    hud.ticks.push(performance.now() - started);
 
     if (game.auto_spawn === true && game.life.epoch % SPAWN_EVERY === 0) {
       generate_pattern(game.life);

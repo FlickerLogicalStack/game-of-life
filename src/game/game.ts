@@ -18,7 +18,11 @@ const on_frame = (engine: GOL.EngineContext, game: GOL.GameState) => {
   game.hud.renders = 0;
 
   render_background(engine, game);
-  render_field_border(engine, game);
+
+  if (game.border === true) {
+    render_field_border(engine, game);
+  }
+
   render_cells(engine, game);
 
   if (game.hud.enabled === 1) {

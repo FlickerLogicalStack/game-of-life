@@ -16,6 +16,7 @@ declare global {
       speed: number;
       last_speed: number;
       auto_spawn: boolean;
+      border: boolean;
     };
   }
 

@@ -6,14 +6,16 @@ wheel or `-` / `=`. Gliders are seeded automatically.
 ## Controls
 
 A panel in the top-right corner of the canvas: a speed slider (`0..144` generations per second,
-`0` = paused), a pause/resume button, a center button and a HUD toggle. The panel is
-screensaver friendly — it fades out completely and only reappears while hovered or focused.
+`0` = paused), a pause/resume button, center and fit buttons, a fullscreen button, a HUD toggle, an
+auto-spawn toggle and a field-border toggle (off by default). The panel is screensaver friendly —
+it fades out completely and only reappears while hovered or focused.
 
 Keyboard shortcuts:
 
 - `Space` — pause / resume (toggles between `0` and the last speed)
 - `H` — toggle the HUD
 - `C` — center the camera on the simulation
+- `F` — toggle fullscreen (the camera refits so the board always covers the viewport)
 - arrows — pan, `-` / `=` — zoom (browser zoom is untouched: game keys ignore `Ctrl`/`Cmd`/`Alt`)
 
 ## Commands

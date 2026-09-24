@@ -125,14 +125,14 @@
         <div class="controls__field">
           <span class="controls__key">speed:</span>
           <div class="controls__control">
-            <input id="controls-speed" type="range" min="0" max="144" step="1" value="60" />
-            <span id="controls-speed-value" class="controls__value">60 gen/s</span>
+            <input id="controls-speed" type="range" min="0" max="144" step="1" />
+            <span id="controls-speed-value" class="controls__value"></span>
           </div>
         </div>
 
         <div class="controls__field">
           <span class="controls__key">pause:</span>
-          <button id="controls-pause" type="button">pause</button>
+          <button id="controls-pause" type="button"></button>
         </div>
 
         <div class="controls__field">
@@ -141,13 +141,28 @@
         </div>
 
         <div class="controls__field">
+          <span class="controls__key">fit:</span>
+          <button id="controls-fit" type="button">fit</button>
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">fullscreen:</span>
+          <button id="controls-fullscreen" type="button"></button>
+        </div>
+
+        <div class="controls__field">
           <span class="controls__key">hud:</span>
-          <input id="controls-hud" type="checkbox" checked aria-label="hud" />
+          <input id="controls-hud" type="checkbox" aria-label="hud" />
         </div>
 
         <div class="controls__field">
           <span class="controls__key">auto spawn:</span>
-          <input id="controls-auto-spawn" type="checkbox" checked aria-label="auto spawn" />
+          <input id="controls-auto-spawn" type="checkbox" aria-label="auto spawn" />
+        </div>
+
+        <div class="controls__field">
+          <span class="controls__key">border:</span>
+          <input id="controls-border" type="checkbox" aria-label="border" />
         </div>
       </div>
     </div>
